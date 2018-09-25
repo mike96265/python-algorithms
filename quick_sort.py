@@ -1,3 +1,6 @@
+from random import randint
+
+
 class Solution:
 
     def quick_sort(self, A, p, r):
@@ -11,7 +14,7 @@ def partition(A, p, r):
     x = A[r]
     i = p - 1
     for j in range(p, r):
-        if A[j] <= x:
+        if A[j] < x:
             i += 1
             A[i], A[j] = A[j], A[i]
     A[i + 1], A[r] = A[r], A[i + 1]
@@ -19,7 +22,8 @@ def partition(A, p, r):
 
 
 if __name__ == '__main__':
-    S = Solution()
-    a = [1, 8, 7, 6, 5, 3, 3, 6]
-    S.quick_sort(a, 0, len(a) - 1)
-    print(a)
+    s = Solution()
+    b = [randint(1, 100) for _ in range(10)]
+    print(f'before sort: {b}')
+    s.quick_sort(b, 0, len(b) - 1)
+    print(f'after sort: {b}')
