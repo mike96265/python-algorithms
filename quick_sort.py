@@ -1,3 +1,4 @@
+import time
 from random import randint
 
 
@@ -23,7 +24,17 @@ def partition(A, p, r):
 
 if __name__ == '__main__':
     s = Solution()
-    b = [randint(1, 100) for _ in range(10)]
-    print(f'before sort: {b}')
-    s.quick_sort(b, 0, len(b) - 1)
-    print(f'after sort: {b}')
+    total = 0
+    for _ in range(10):
+        b = [randint(1, 100000) for _ in range(100000)]
+        start = time.time()
+        s.quick_sort(b, 0, len(b) - 1)
+        end = time.time()
+        total += (end - start)
+    print(f'10 times sort completed in {total}')
+    print(f'per time cost {total/10}')
+
+'''
+10 times sort completed in 2.180020332336426
+per time cost 0.2180020332336426
+'''
