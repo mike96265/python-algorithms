@@ -6,8 +6,8 @@ class Solution:
 
     def quick_sort(self, A, p, r):
         if p < r:
-            i = randint(p, r)
-            A[i], A[r] = A[r], A[i]
+            # i = randint(p, r)
+            # A[i], A[r] = A[r], A[i]
             q = partition(A, p, r)
             self.quick_sort(A, p, q - 1)
             self.quick_sort(A, q + 1, r)
@@ -25,14 +25,18 @@ def partition(A, p, r):
 
 
 if __name__ == '__main__':
-    total = 0
     s = Solution()
-    for i in range(100):
+    total = 0
+    for _ in range(10):
         b = [randint(1, 100000) for _ in range(100000)]
         start = time.time()
-        s.quick_sort(b, 0, 100000 - 1)
+        s.quick_sort(b, 0, len(b) - 1)
         end = time.time()
         total += (end - start)
+    print(f'10 times sort completed in {total}')
+    print(f'per time cost {total/10}')
 
-    print(f'100 times sort cost {total}')
-    print(f'per sort cost {total/100}')
+'''
+10 times sort completed in 2.180020332336426
+per time cost 0.2180020332336426
+'''
