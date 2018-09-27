@@ -18,8 +18,8 @@ class MaxHeap:
             self.max_heapify(i)
 
     def max_heapify(self, i):
-        left = i << 1
-        right = (i << 1) + 1
+        left = (i << 1) + 1
+        right = (i << 1) + 2
         if left < self.length and self._heap[left] > self._heap[i]:
             largest = left
         else:
