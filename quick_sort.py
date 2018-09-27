@@ -1,3 +1,4 @@
+import time
 from random import randint
 
 
@@ -5,6 +6,8 @@ class Solution:
 
     def quick_sort(self, A, p, r):
         if p < r:
+            i = randint(p, r)
+            A[i], A[r] = A[r], A[i]
             q = partition(A, p, r)
             self.quick_sort(A, p, q - 1)
             self.quick_sort(A, q + 1, r)
@@ -22,8 +25,14 @@ def partition(A, p, r):
 
 
 if __name__ == '__main__':
+    total = 0
     s = Solution()
-    b = [randint(1, 100) for _ in range(10)]
-    print(f'before sort: {b}')
-    s.quick_sort(b, 0, len(b) - 1)
-    print(f'after sort: {b}')
+    for i in range(100):
+        b = [randint(1, 100000) for _ in range(100000)]
+        start = time.time()
+        s.quick_sort(b, 0, 100000 - 1)
+        end = time.time()
+        total += (end - start)
+
+    print(f'100 times sort cost {total}')
+    print(f'per sort cost {total/100}')
