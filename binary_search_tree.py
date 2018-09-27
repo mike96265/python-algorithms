@@ -34,7 +34,7 @@ class BinarySearchTree:
                 else:
                     index = x._right
                 length = len(self)
-                if index > length:
+                if index >= length:
                     self._tree.extend(None for _ in range(length, index + 1))
                 self._tree[index] = key
                 break
@@ -73,6 +73,5 @@ class Node:
 if __name__ == '__main__':
     a = BinarySearchTree()
     a.insert(200)
-    a.insert(1000)
     a.insert(100)
     print(a)
