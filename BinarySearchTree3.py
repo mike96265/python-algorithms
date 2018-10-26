@@ -5,6 +5,12 @@ class Node:
         self.left = None
         self.right = None
 
+    def __repr__(self):
+        return f'{self.key}'
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class BinarySearchTree:
     root = None
