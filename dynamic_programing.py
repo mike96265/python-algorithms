@@ -103,6 +103,27 @@ class TextJustification:
         return solu
 
 
+class LongestCommonSequence:
+
+    @lru_cache(maxsize=10000)
+    def solution(self, x, y):
+        m = len(x)
+        n = len(y)
+        if 0 in (m, n):
+            return ''
+        if x[m - 1] == y[n - 1]:
+            s = x[m - 1]
+            return self.solution(x[:-1], y[:-1]) + s
+        else:
+            left = self.solution(x[:-1], y)
+            right = self.solution(x, y[:-1])
+            return left if len(left) > len(right) else right
+
+
 if __name__ == '__main__':
-    s = TextJustification()
-    print(s.solution(['a', 'b', 'c', 'd', 'e'], 3))
+    # s = TextJustification()
+    # print(s.solution(['a', 'b', 'c', 'd', 'e'], 3))
+    s = LongestCommonSequence()
+    print(s.solution(
+        'fjasdfjiaewujfkjdsafkjewpoiruasndfkasdjfkadjflkadsjflkasdjffjakweuroiasjdfkasdjfkasjdfkladjsfkajdsfkklajrioewuaifnksadfkajeiojfadksjfakdjfkadfnkasdfjasdkf',
+        'fksaldjfasdjflkasdjfkasdsdjfkasdjfkjsdakfjasdkfjaweiurkadsflamsvmsdkfhaiwoueriajdfksadjfkasdjfdsvnkasjfkasdjfksadjfkasjdfklwajeruaemfkjpoqjfkdasjfkadnfkhfkadsjf'))
