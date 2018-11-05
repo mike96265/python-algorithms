@@ -120,10 +120,99 @@ class LongestCommonSequence:
             return left if len(left) > len(right) else right
 
 
+# class LongestValidParentheses:
+#
+#     @lru_cache(maxsize=1000)
+#     def longestValidParentheses(self, s):
+#         length = len(s)
+#         if length < 2:
+#             if s != '()':
+#                 return 0
+#             else:
+#                 return 2
+#         else:
+#             spilt_result = []
+#             for split_position in range(1, length):
+#                 left = self.longestValidParentheses(s[:split_position])
+#                 if s[split_position - 1: split_position+1] == '()':
+#                     middle = 2
+#                     left_start = split_position - 2
+#                     right_start = split_position + 1
+#                     while True:
+#                         try:
+#                             if s[left_start] == '(' and s[right_start] == ')' \
+#                                   and left_start >= 0 and right_start <= length:
+#                                 left_start -= 1
+#                                 right_start += 1
+#                                 middle += 2
+#                             else:
+#                                 break
+#                         except IndexError:
+#                             break
+#                 else:
+#                     middle = 0
+#                     left_start = split_position - 1
+#                     right_start = split_position
+#                 for i in range(left_start, 0, -2):
+#                     if s[i - 1: i + 1] != '()':
+#                         break
+#                     middle += 2
+#                 for i in range(right_start, length, 2):
+#                     if s[i: i+2] != '()':
+#                         break
+#                     middle += 2
+#                 right = self.longestValidParentheses(s[split_position:])
+#                 spilt_result.append(max(left, middle, right))
+#             return max(spilt_result)
+
+
+'''
+public class Solution {
+
+    public int longestValidParentheses(String s) {
+        int maxans = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.empty()) {
+                    stack.push(i);
+                } else {
+                    maxans = Math.max(maxans, i - stack.peek());
+                }
+            }
+        }
+        return maxans;
+    }
+}
+'''
+
+
+class LongestValidParentheses:
+
+    def longestValidParentheses(self, s):
+        longest = 0
+        stack = list()
+        stack.append(-1)
+        for i in range(len(s)):
+            if s[i] == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if stack:
+                    longest = max(longest, i - stack[-1])
+                else:
+                    stack.append(i)
+        return longest
+
+
 if __name__ == '__main__':
     # s = TextJustification()
     # print(s.solution(['a', 'b', 'c', 'd', 'e'], 3))
-    s = LongestCommonSequence()
-    print(s.solution(
-        'fjasdfjiaewujfkjdsafkjewpoiruasndfkasdjfkadjflkadsjflkasdjffjakweuroiasjdfkasdjfkasjdfkladjsfkajdsfkklajrioewuaifnksadfkajeiojfadksjfakdjfkadfnkasdfjasdkf',
-        'fksaldjfasdjflkasdjfkasdsdjfkasdjfkjsdakfjasdkfjaweiurkadsflamsvmsdkfhaiwoueriajdfksadjfkasdjfdsvnkasjfkasdjfksadjfkasjdfklwajeruaemfkjpoqjfkdasjfkadnfkhfkadsjf'))
+    # s = LongestCommonSequence()
+    # print(s.solution())
+    s = LongestValidParentheses()
+    print(s.longestValidParentheses("()()((()()"))
