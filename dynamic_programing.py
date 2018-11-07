@@ -209,10 +209,65 @@ class LongestValidParentheses:
         return longest
 
 
+class ClimbingStairs:
+
+    @lru_cache(maxsize=1000)
+    def climbStairs(self, n):
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        elif n == 2:
+            return 2
+        else:
+            return self.climbStairs(n - 1) + self.climbStairs(n - 2)
+
+
+class Solution:
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return self.find_max_subarray(0, len(nums) - 1, nums)
+
+    def find_max_subarray(self, left, right, nums):
+        mid = (right + left) // 2
+        if left == right:
+            return nums[left]
+        left_max = self.find_max_subarray(left, mid, nums)
+        right_max = self.find_max_subarray(mid + 1, right, nums)
+        mid_max = self.find_max_mid_subarray(left, right, mid, nums)
+        return max(left_max, right_max, mid_max)
+
+    def find_max_mid_subarray(self, left, right, mid, nums):
+        left_max_sum = float('-inf')
+        left_sum = 0
+        for i in range(mid, left - 1, -1):
+            left_sum = nums[i] + left_sum
+            if left_sum > left_max_sum:
+                left_max_sum = left_sum
+        right_max_sum = float('-inf')
+        right_sum = 0
+        for i in range(mid + 1, right + 1):
+            right_sum += nums[i]
+            if right_sum > right_max_sum:
+                right_max_sum = right_sum
+        return left_max_sum + right_max_sum
+
+
 if __name__ == '__main__':
+    '''text justification test'''
     # s = TextJustification()
     # print(s.solution(['a', 'b', 'c', 'd', 'e'], 3))
     # s = LongestCommonSequence()
     # print(s.solution())
-    s = LongestValidParentheses()
-    print(s.longestValidParentheses("()()((()()"))
+    '''longest valid parentheses test'''
+    # s = LongestValidParentheses()
+    # print(s.longestValidParentheses("()()((()()"))
+    '''climbing stairs test'''
+    # s = ClimbingStairs()
+    # s.climbStairs(3)
+    '''max subarray test'''
+    s = Solution()
+    print(s.maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
