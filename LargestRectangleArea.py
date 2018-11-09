@@ -1,3 +1,7 @@
+import time
+from random import randint
+
+
 class LargestRectangleArea:
 
     def solution(self, nums):
@@ -32,4 +36,7 @@ class LargestRectangleArea:
 
 if __name__ == '__main__':
     s = LargestRectangleArea()
-    print(s.solution([0, 1, 0, 1]))
+    start = time.time()
+    print(s.solution([randint(0, 100) for i in range(1000000)]))
+    end = time.time()
+    print(end - start)
