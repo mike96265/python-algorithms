@@ -3,35 +3,33 @@ from functools import lru_cache
 
 class Solution:
 
-    def max_coins(self, nums: list):
-        length = len(nums)
-        val_index = {nums[i]: i for i in range(length)}
+    def max_coins(self, nums):
+        self.nums = nums
+        end = len(nums)
+        return self.solution(0, end)
 
-
-
-        # @lru_cache(maxsize=20000)
-    # def solution(self, nums):
-    #     max_coins = 0
-    #     length = len(nums)
-    #     if length == 0:
-    #         return 0
-    #     elif length == 1:
-    #         return nums[0]
-    #     elif length == 2:
-    #         return max(nums[0], nums[1]) + nums[0] + nums[1]
-    #     else:
-    #         for i in range(length):
-    #             temp_coins = nums[i]
-    #             left = i - 1
-    #             right = i + 1
-    #             if left >= 0:
-    #                 temp_coins *= nums[left]
-    #             if right < length:
-    #                 temp_coins *= nums[right]
-    #             max_coins = max(max_coins, temp_coins + self.solution(nums[0: left + 1] + nums[right: length]))
-    #         return max_coins
+    @lru_cache(maxsize=10000)
+    def solution(self, start, end):
+        if start == end:
+            return 0
+        else:
+            max_coins = 0
+            for i in range(start, end):
+                temp_coins = self.nums[i]
+                left = i - 1
+                right = i + 1
+                left_coins = 0
+                right_coins = 0
+                if left >= start:
+                    temp_coins *= self.nums[left]
+                    left_coins = self.solution(start, left)
+                if right < end:
+                    temp_coins *= self.nums[right]
+                    right_coins = self.solution(right, end)
+                max_coins = max(max_coins, temp_coins + left_coins + right_coins)
+            return max_coins
 
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.max_coins([3, 21, 53, 24, 74, 35, 6, 38, 73, 87, 62, 30, 40, 82, 18, 79, 86, 70, 3, 96]))
+    print(s.max_coins([3, 1, 5, 8]))
